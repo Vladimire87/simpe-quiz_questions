@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-end mt-5 mb-3">
+  <%= link_to "Create New Quiz", new_quiz_path, class: "btn btn-lg btn-primary" %>
+</div>
+<div class="row">
+  <% @quizzes.each do |quiz| %>
+    <div class="col">
+      <div class="card mb-3" style="width: 18rem;">
+        <div class="card-title">
+          <h3>
+            <%= quiz.title  %>
+          </h3>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

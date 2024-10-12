@@ -1,0 +1,39 @@
+<%= form_with model: quiz, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' } do |f| %>
+  <% if quiz.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(quiz.errors.count, "error") %> prohibited this quiz from being saved:</h2>
+      <ul>
+        <% quiz.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= f.label :title, class: "form-label" %>
+    <%= f.text_field :title, class: "form-control #{"is-invalid" if quiz.errors[:title].any?}", placeholder: "Enter Quiz title" %>
+    <% quiz.errors.full_messages_for(:title).each do |message| %>
+      <div class="form-text text-danger">
+        <%= message %>
+      </div>
+    <% end %>
+  </div>
+  <template data-nested-form-target="template">
+    <%= f.fields_for :questions, Question.new, child_index: 'NEW_RECORD' do |question_fields| %>
+      <%= render "questions_form", f: question_fields %>
+    <% end %>
+  </template>
+  <div class="d-flex justify-content-between">
+    <h3>Quiz Question</h3>
+    <button type="button" data-action="nested-form#add" class="btn btn-sm btn-primary">Add Question</button>
+  </div>
+  <%= f.fields_for :questions do |question_fields| %>
+    <div class="mb-3">
+      <%= render "questions_form", f: question_fields %>
+    </div>
+  <% end %>
+  <div data-nested-form-target="target"></div>
+  <div class="form-actions">
+    <%= f.submit class: "btn btn-lg btn-primary mt-3" %>
+  </div>
+<% end %>

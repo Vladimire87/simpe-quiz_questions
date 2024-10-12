@@ -1,0 +1,11 @@
+<div class="nested-form-wrapper" data-new-record="<%= f.object.new_record? %>">
+  <%= f.label :text, class: "from-label" %>
+  <%= f.text_area :text, class: "form-control #{"is-invalid" if f.object.errors[:text].any?}" %>
+  <% f.object.errors.full_messages_for(:text).each do |message| %>
+    <div class="form-text text-danger">
+      <%= message %>
+    </div>
+  <% end %>
+  <button type="button" data-action="nested-form#remove" class="btn btn-sm btn-primary mt-3">Remove Question</button>
+  <%= f.hidden_field :_destroy %>
+</div>
